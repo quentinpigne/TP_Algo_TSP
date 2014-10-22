@@ -7,29 +7,15 @@ import java.util.Random;
  */
 
 public class GraphGenerator {
-    private Random r;
-    private int n;
-    private double p;
+    private static Random r = new Random();
 
-    public GraphGenerator(int n, double p) {
-        this.n = n;
-        this.p = p;
-    }
-
-    public void setN(int n) {
-        this.n = n;
-    }
-
-    public void setP(double p) {
-        this.p = p;
-    }
-
-    public Graph generate() {
-        Graph graph = new Graph();
+    public static Graph generate(int n, double p) {
+        Graph newGraph = new Graph();
 
         for(int i = 0; i < n; i++) {
-            Node newNode = new Node(r.nextDouble(), r.nextDouble());
-            graph.addNode(newNode);
+            newGraph.addNode(r.nextDouble(), r.nextDouble());
         }
+
+        return newGraph;
     }
 }
