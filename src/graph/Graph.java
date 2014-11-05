@@ -15,6 +15,10 @@ public class Graph {
         V.add(new Node(x, y));
     }
 
+    public void addNode(Node node) {
+        V.add(node);
+    }
+
     public void addEdge(Node start, Node end) {
         E.add(new Edge(start, end));
     }
