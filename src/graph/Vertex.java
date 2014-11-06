@@ -4,12 +4,12 @@ package graph;
  * Created by pigneq on 21/10/14.
  */
 
-public class Node {
+public class Vertex {
     private int id;
     private double x;
     private double y;
 
-    public Node(int id, double x, double y) {
+    public Vertex(int id, double x, double y) {
         this.id = id;
         this.x = x;
         this.y = y;

@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-    private List<Node> V = new ArrayList<Node>();
+    private List<Vertex> V = new ArrayList<Vertex>();
     private List<Edge> E = new ArrayList<Edge>();
 
     //Modificateurs de noeuds
-    public List<Node> getV() {
+    public List<Vertex> getV() {
         return V;
     }
 
-    public Node getNode(int i) {
+    public Vertex getVertex(int i) {
         return V.get(i);
     }
 
-    public void addNode(Node node) {
-        V.add(node);
+    public void addVertex(Vertex vertex) {
+        V.add(vertex);
     }
 
     //Modificateurs d'arc

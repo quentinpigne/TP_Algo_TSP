@@ -3,7 +3,7 @@ package gui;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import graph.Edge;
-import graph.Node;
+import graph.Vertex;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ import java.util.List;
  */
 
 public class GraphGUI extends JFrame {
-    public GraphGUI(List<Node> V, List<Edge> E) {
-        super("Graphe généré aléatoirement");
+    public GraphGUI(List<Vertex> V, List<Edge> E) {
+        super("Visualisation du graphe");
 
         mxGraph graph = new mxGraph();
         Object parent = graph.getDefaultParent();
@@ -25,8 +25,8 @@ public class GraphGUI extends JFrame {
 
         graph.getModel().beginUpdate();
         try {
-            for(Node node : V) {
-                Object v = graph.insertVertex(parent, null, null, 500*node.getX(), 500*node.getY(), 10, 10);
+            for(Vertex vertex : V) {
+                Object v = graph.insertVertex(parent, null, null, 500* vertex.getX(), 500* vertex.getY(), 10, 10);
                 vertexList.add(v);
             }
             for(Edge edge : E) {

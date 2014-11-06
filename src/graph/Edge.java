@@ -1,21 +1,21 @@
 package graph;
 
 public class Edge {
-    private Node start;
-    private Node end;
+    private Vertex start;
+    private Vertex end;
     private double distance;
 
-    public Edge(Node start, Node end) {
+    public Edge(Vertex start, Vertex end) {
         this.start = start;
         this.end = end;
         computeDistance();
     }
 
-    public Node getStart() {
+    public Vertex getStart() {
         return start;
     }
 
-    public Node getEnd() {
+    public Vertex getEnd() {
         return end;
     }
 
@@ -23,12 +23,12 @@ public class Edge {
         return distance;
     }
 
-    public void setStart(Node start) {
+    public void setStart(Vertex start) {
         this.start = start;
         computeDistance();
     }
 
-    public void setEnd(Node end) {
+    public void setEnd(Vertex end) {
         this.end = end;
         computeDistance();
     }

@@ -13,14 +13,14 @@ public class TP_Algo {
     public static void main(String[] args) {
         Graph graphe = null;
         try {
-            graphe = GraphGenerator.generate(10, 0.5);
+            graphe = GraphGenerator.generate(20, 0.2);
         } catch (BoundaryException e) {
 
         }
 
         GraphGUI graphGUI = new GraphGUI(graphe.getV(), graphe.getE());
         graphGUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        graphGUI.setSize(400, 320);
+        graphGUI.setSize(500, 500);
         graphGUI.setVisible(true);
     }
 }
