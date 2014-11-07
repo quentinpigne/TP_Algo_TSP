@@ -1,9 +1,6 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by pigneq on 21/10/14.
@@ -19,13 +16,13 @@ public class GraphGenerator {
         Graph newGraph = new Graph();
 
         //Composantes connexes
-        Map<Integer, List<Vertex>> composantes = new HashMap<Integer, List<Vertex>>();
+        Map<Integer, HashSet<Vertex>> composantes = new HashMap<Integer, HashSet<Vertex>>();
 
         //Tirage des sommets et ajout à la liste des déconnectés
         for(int i = 0; i < n; i++) {
             Vertex newVertex = new Vertex(i, Math.random(), Math.random());
             newGraph.addVertex(newVertex);
-            composantes.put(i, new ArrayList<Vertex>());
+            composantes.put(i, new HashSet<Vertex>());
             composantes.get(i).add(newVertex);
         }
 
@@ -44,19 +41,23 @@ public class GraphGenerator {
         return newGraph;
     }
 
-    private static void fusion(Map<Integer, List<Vertex>> c, Vertex i, Vertex j) {
+    private static void fusion(Map<Integer, HashSet<Vertex>> c, Vertex vi, Vertex vj) {
         int li = 0;
         int lj = 0;
         try {
-            while (!c.get(li).contains(i)) {
+            while (!c.get(li).contains(vi)) {
                 li++;
             }
-            while (!c.get(lj).contains(j)) {
+            while (!c.get(lj).contains(vj)) {
                 lj++;
             }
-            for (int k = 0; k < c.get(lj).size(); k++) {
-                c.get(li).add(c.get(lj).get(k));
+            Object[] obj = c.get(lj).toArray();
+            for (Object o :obj){
+                c.get(li).add((Vertex)o);
+                c.get(lj).remove(o);
             }
+
+
         } catch (NullPointerException e) {
             System.out.println("li qui plante :" + li);
         }
