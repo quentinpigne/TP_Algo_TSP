@@ -26,7 +26,7 @@ public class GraphGUI extends JFrame {
         graph.getModel().beginUpdate();
         try {
             for(Vertex vertex : V) {
-                Object v = graph.insertVertex(parent, null, null, 500* vertex.getX(), 500* vertex.getY(), 10, 10);
+                Object v = graph.insertVertex(parent, null, vertex.getId(), 500* vertex.getX(), 500* vertex.getY(), 10, 10);
                 vertexList.add(v);
             }
             for(Edge edge : E) {
