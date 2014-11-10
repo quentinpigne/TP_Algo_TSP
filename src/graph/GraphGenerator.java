@@ -33,9 +33,7 @@ public class GraphGenerator {
                         if(v.getIdC() == vj.getIdC()) {
                             v.setIdC(vi.getIdC());
                         }
-
                     }
-
                 }
             }
         }
@@ -45,15 +43,44 @@ public class GraphGenerator {
         for(Vertex v : newGraph.getV()) {
             list_comp.add(v.getIdC());
         }
+        int nb_comp = list_comp.size();
 
-        System.out.println("Nombre de composantes connexes avant connexification : " + list_comp.size());
+        System.out.println("Nombre de composantes connexes avant connexification : " + nb_comp);
 
         //Connexification du graphe
-        int idC_final = newGraph.getV().get(0).getIdC();
-        for(Vertex v : newGraph.getV()) {
-            if(v.getIdC() != idC_final) {
+        while(nb_comp > 1) {
+            //Tirage de deux sommets au hasard
+            // (on force V1 à être un sommet de la composante connexe du sommet 0 et V2 à ne pas l'être)
+            int randomV1 = (int)(n * Math.random());
+            while(newGraph.getV().get(randomV1).getIdC() != newGraph.getV().get(0).getIdC()) {
+                randomV1 = (int)(n * Math.random());
+            }
+            int randomV2 = (int)(n * Math.random());
+            while(newGraph.getV().get(randomV2).getIdC() == newGraph.getV().get(0).getIdC()) {
+                randomV2 = (int)(n * Math.random());
+            }
+            //On fusionne avec une probabilité p
+            if(Math.random() <= p) {
+                System.out.println("Ajout d'un arc !");
+                Vertex vi = newGraph.getVertex(randomV1);
+                Vertex vj = newGraph.getVertex(randomV2);
+                Edge newEdge = new Edge(vi, vj);
+                newGraph.addEdge(newEdge);
+                for(Vertex v : newGraph.getV()) {
+                    if (v.getIdC() == vj.getIdC()) {
+                        v.setIdC(vi.getIdC());
+                    }
+                }
+                //Recalcul du nombre de composantes connexes
+                list_comp = new HashSet<Integer>();
+                for(Vertex v : newGraph.getV()) {
+                    list_comp.add(v.getIdC());
+                }
+                nb_comp = list_comp.size();
             }
         }
+
+        System.out.println("Nombre de composantes connexes après connexification : " + nb_comp);
 
         //Affichage pour chaque noeud de l'ID et de sa composante connexe
         for(Vertex v : newGraph.getV()) {
