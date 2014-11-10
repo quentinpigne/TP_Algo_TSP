@@ -15,52 +15,51 @@ public class GraphGenerator {
 
         Graph newGraph = new Graph();
 
-        //Composantes connexes
-        Map<Integer, HashSet<Vertex>> composantes = new HashMap<Integer, HashSet<Vertex>>();
-
-        //Tirage des sommets et ajout à la liste des déconnectés
+        //Tirage des sommets
         for(int i = 0; i < n; i++) {
-            Vertex newVertex = new Vertex(i, Math.random(), Math.random());
+            Vertex newVertex = new Vertex(i, i, Math.random(), Math.random());
             newGraph.addVertex(newVertex);
-            composantes.put(i, new HashSet<Vertex>());
-            composantes.get(i).add(newVertex);
         }
 
         //Tirage des arcs (pour chaque sommet 2 à 2)
         for(int i = 0; i < n; i++) {
-            System.out.println(i);
             for(int j = i+1; j < n; j++) {
                 if(Math.random() <= p) {
-                    Edge newEdge = new Edge(newGraph.getVertex(i), newGraph.getVertex(j));
+                    Vertex vi = newGraph.getVertex(i);
+                    Vertex vj = newGraph.getVertex(j);
+                    Edge newEdge = new Edge(vi, vj);
                     newGraph.addEdge(newEdge);
-                    fusion(composantes, newGraph.getVertex(i), newGraph.getVertex(j));
+                    for(Vertex v : newGraph.getV()) {
+                        if(v.getIdC() == vj.getIdC()) {
+                            v.setIdC(vi.getIdC());
+                        }
+
+                    }
+
                 }
             }
         }
-        System.out.print(composantes.size());
-        return newGraph;
-    }
 
-    private static void fusion(Map<Integer, HashSet<Vertex>> c, Vertex vi, Vertex vj) {
-        int li = 0;
-        int lj = 0;
-        try {
-            while (!c.get(li).contains(vi)) {
-                li++;
-            }
-            while (!c.get(lj).contains(vj)) {
-                lj++;
-            }
-            Object[] obj = c.get(lj).toArray();
-            for (Object o :obj){
-                c.get(li).add((Vertex)o);
-                c.get(lj).remove(o);
-            }
-
-
-        } catch (NullPointerException e) {
-            System.out.println("li qui plante :" + li);
+        //Calcul du nombre de composantes connexes
+        Set<Integer> list_comp = new HashSet<Integer>();
+        for(Vertex v : newGraph.getV()) {
+            list_comp.add(v.getIdC());
         }
-        c.remove(lj);
+
+        System.out.println("Nombre de composantes connexes avant connexification : " + list_comp.size());
+
+        //Connexification du graphe
+        int idC_final = newGraph.getV().get(0).getIdC();
+        for(Vertex v : newGraph.getV()) {
+            if(v.getIdC() != idC_final) {
+            }
+        }
+
+        //Affichage pour chaque noeud de l'ID et de sa composante connexe
+        for(Vertex v : newGraph.getV()) {
+            System.out.println("Noeud " + v.getId() + " -> composante : " + v.getIdC());
+        }
+
+        return newGraph;
     }
 }
