@@ -5,10 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by pigneq on 21/10/14.
- */
-
 public class GraphGenerator {
 
     public static Graph generate(int n, double p) throws BoundaryException {

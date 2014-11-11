@@ -7,7 +7,7 @@ public class Graph {
     private List<Vertex> V = new ArrayList<Vertex>();
     private List<Edge> E = new ArrayList<Edge>();
 
-    //Modificateurs de noeuds
+    //Getters / Setters de sommets
     public List<Vertex> getV() {
         return V;
     }
@@ -20,7 +20,7 @@ public class Graph {
         V.add(vertex);
     }
 
-    //Modificateurs d'arc
+    //Getters / Setters d'arc
     public List<Edge> getE() {
         return E;
     }

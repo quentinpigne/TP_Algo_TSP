@@ -1,9 +1,5 @@
 package graph;
 
-/**
- * Created by pigneq on 21/10/14.
- */
-
 public class Vertex {
     private int id;
     private double x;

@@ -10,10 +10,6 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by quentin on 06/11/14.
- */
-
 public class GraphGUI extends JFrame {
     public GraphGUI(List<Vertex> V, List<Edge> E) {
         super("Visualisation du graphe");
