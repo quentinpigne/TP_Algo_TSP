@@ -1,6 +1,9 @@
 package graph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by pigneq on 21/10/14.
@@ -14,11 +17,13 @@ public class GraphGenerator {
         }
 
         Graph newGraph = new Graph();
+        List<Integer> vertexComp = new ArrayList<Integer>();
 
         //Tirage des sommets
         for(int i = 0; i < n; i++) {
-            Vertex newVertex = new Vertex(i, i, Math.random(), Math.random());
+            Vertex newVertex = new Vertex(i, Math.random(), Math.random());
             newGraph.addVertex(newVertex);
+            vertexComp.add(i);
         }
 
         //Tirage des arcs (pour chaque sommet 2 à 2)
@@ -29,9 +34,9 @@ public class GraphGenerator {
                     Vertex vj = newGraph.getVertex(j);
                     Edge newEdge = new Edge(vi, vj);
                     newGraph.addEdge(newEdge);
-                    for(Vertex v : newGraph.getV()) {
-                        if(v.getIdC() == vj.getIdC()) {
-                            v.setIdC(vi.getIdC());
+                    for(int k = 0; k < newGraph.getV().size(); k++) {
+                        if(vertexComp.get(k) == vertexComp.get(j)) {
+                            vertexComp.set(k, vertexComp.get(i));
                         }
                     }
                 }
@@ -40,8 +45,8 @@ public class GraphGenerator {
 
         //Calcul du nombre de composantes connexes
         Set<Integer> list_comp = new HashSet<Integer>();
-        for(Vertex v : newGraph.getV()) {
-            list_comp.add(v.getIdC());
+        for(int i = 0; i < newGraph.getV().size(); i++) {
+            list_comp.add(vertexComp.get(i));
         }
         int nb_comp = list_comp.size();
 
@@ -52,11 +57,11 @@ public class GraphGenerator {
             //Tirage de deux sommets au hasard
             // (on force V1 à être un sommet de la composante connexe du sommet 0 et V2 à ne pas l'être)
             int randomV1 = (int)(n * Math.random());
-            while(newGraph.getV().get(randomV1).getIdC() != newGraph.getV().get(0).getIdC()) {
+            while(vertexComp.get(randomV1) != vertexComp.get(0)) {
                 randomV1 = (int)(n * Math.random());
             }
             int randomV2 = (int)(n * Math.random());
-            while(newGraph.getV().get(randomV2).getIdC() == newGraph.getV().get(0).getIdC()) {
+            while(vertexComp.get(randomV2) == vertexComp.get(0)) {
                 randomV2 = (int)(n * Math.random());
             }
             //On fusionne avec une probabilité p
@@ -66,15 +71,15 @@ public class GraphGenerator {
                 Vertex vj = newGraph.getVertex(randomV2);
                 Edge newEdge = new Edge(vi, vj);
                 newGraph.addEdge(newEdge);
-                for(Vertex v : newGraph.getV()) {
-                    if (v.getIdC() == vj.getIdC()) {
-                        v.setIdC(vi.getIdC());
+                for(int i = 0; i < newGraph.getV().size(); i++) {
+                    if(vertexComp.get(i) == vertexComp.get(randomV2)) {
+                        vertexComp.set(i, vertexComp.get(randomV1));
                     }
                 }
                 //Recalcul du nombre de composantes connexes
                 list_comp = new HashSet<Integer>();
-                for(Vertex v : newGraph.getV()) {
-                    list_comp.add(v.getIdC());
+                for(int i = 0; i < newGraph.getV().size(); i++) {
+                    list_comp.add(vertexComp.get(i));
                 }
                 nb_comp = list_comp.size();
             }
@@ -83,8 +88,8 @@ public class GraphGenerator {
         System.out.println("Nombre de composantes connexes après connexification : " + nb_comp);
 
         //Affichage pour chaque noeud de l'ID et de sa composante connexe
-        for(Vertex v : newGraph.getV()) {
-            System.out.println("Noeud " + v.getId() + " -> composante : " + v.getIdC());
+        for(int i = 0; i < newGraph.getV().size(); i++) {
+            System.out.println("Noeud " + i + " -> composante : " + vertexComp.get(i));
         }
 
         return newGraph;
