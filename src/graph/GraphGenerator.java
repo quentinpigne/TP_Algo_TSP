@@ -34,7 +34,9 @@ public class GraphGenerator {
                     Vertex vj = newGraph.getVertex(j);
                     Edge newEdge = new Edge(vi, vj);
                     newGraph.addEdge(newEdge);
-                    for(int k = 0; k < newGraph.getV().size(); k++) {
+
+                    //Fusion de deux composantes connexes
+                    for(int k = 0; k < n; k++) {
                         if(vertexComp.get(k) == vertexComp.get(j)) {
                             vertexComp.set(k, vertexComp.get(i));
                         }
@@ -45,7 +47,7 @@ public class GraphGenerator {
 
         //Calcul du nombre de composantes connexes
         Set<Integer> list_comp = new HashSet<Integer>();
-        for(int i = 0; i < newGraph.getV().size(); i++) {
+        for(int i = 0; i < n; i++) {
             list_comp.add(vertexComp.get(i));
         }
         int nb_comp = list_comp.size();
@@ -64,21 +66,26 @@ public class GraphGenerator {
             while(vertexComp.get(randomV2) == vertexComp.get(0)) {
                 randomV2 = (int)(n * Math.random());
             }
-            //On fusionne avec une probabilité p
+
+            //On fusionne selon une probabilité p
             if(Math.random() <= p) {
+                //Ajout d'un arc
                 System.out.println("Ajout d'un arc !");
                 Vertex vi = newGraph.getVertex(randomV1);
                 Vertex vj = newGraph.getVertex(randomV2);
                 Edge newEdge = new Edge(vi, vj);
                 newGraph.addEdge(newEdge);
-                for(int i = 0; i < newGraph.getV().size(); i++) {
+
+                //Fusion de deux composantes connexes
+                for(int i = 0; i < n; i++) {
                     if(vertexComp.get(i) == vertexComp.get(randomV2)) {
                         vertexComp.set(i, vertexComp.get(randomV1));
                     }
                 }
+
                 //Recalcul du nombre de composantes connexes
                 list_comp = new HashSet<Integer>();
-                for(int i = 0; i < newGraph.getV().size(); i++) {
+                for(int i = 0; i < n; i++) {
                     list_comp.add(vertexComp.get(i));
                 }
                 nb_comp = list_comp.size();
@@ -88,7 +95,7 @@ public class GraphGenerator {
         System.out.println("Nombre de composantes connexes après connexification : " + nb_comp);
 
         //Affichage pour chaque noeud de l'ID et de sa composante connexe
-        for(int i = 0; i < newGraph.getV().size(); i++) {
+        for(int i = 0; i < n; i++) {
             System.out.println("Noeud " + i + " -> composante : " + vertexComp.get(i));
         }
 
