@@ -27,7 +27,7 @@ public class GraphGUI extends JFrame {
                 vertexList.add(v);
             }
             for(Edge edge : E) {
-                Object e = graph.insertEdge(parent, null, null, vertexList.get(edge.getStart().getId()), vertexList.get(edge.getEnd().getId()), mxConstants.STYLE_ENDARROW + "=" + mxConstants.NONE);
+                Object e = graph.insertEdge(parent, null, edge.getDistance(), vertexList.get(edge.getStart().getId()), vertexList.get(edge.getEnd().getId()), mxConstants.STYLE_ENDARROW + "=" + mxConstants.NONE);
                 edgeList.add(e);
             }
         } finally {
