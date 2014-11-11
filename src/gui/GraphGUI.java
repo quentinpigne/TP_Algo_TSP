@@ -1,6 +1,7 @@
 package gui;
 
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 import graph.Edge;
 import graph.Vertex;
@@ -26,11 +27,12 @@ public class GraphGUI extends JFrame {
         graph.getModel().beginUpdate();
         try {
             for(Vertex vertex : V) {
-                Object v = graph.insertVertex(parent, null, vertex.getId(), 500* vertex.getX(), 500* vertex.getY(), 10, 10);
+                Object v = graph.insertVertex(parent, null, vertex.getId(), 700* vertex.getX(), 700* vertex.getY(), 20, 20, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE);
                 vertexList.add(v);
             }
             for(Edge edge : E) {
-                Object e = graph.insertEdge(parent, null, null, vertexList.get(edge.getStart().getId()), vertexList.get(edge.getEnd().getId()));
+                Object e = graph.insertEdge(parent, null, null, vertexList.get(edge.getStart().getId()), vertexList.get(edge.getEnd().getId()), mxConstants.STYLE_ENDARROW + "=" + mxConstants.NONE);
+                edgeList.add(e);
             }
         } finally {
             graph.getModel().endUpdate();
