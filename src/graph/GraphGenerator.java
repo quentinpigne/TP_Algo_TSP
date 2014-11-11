@@ -22,6 +22,15 @@ public class GraphGenerator {
             vertexComp.add(i);
         }
 
+        //Création de la matrice des distances entre sommets
+        double[][] distMatrix = new double[n][n];
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(i == j) distMatrix[i][j] = 0;
+                else distMatrix[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
         //Tirage des arcs (pour chaque sommet 2 à 2)
         for(int i = 0; i < n; i++) {
             for(int j = i+1; j < n; j++) {
@@ -29,7 +38,7 @@ public class GraphGenerator {
                     Vertex vi = newGraph.getVertex(i);
                     Vertex vj = newGraph.getVertex(j);
                     Edge newEdge = new Edge(vi, vj);
-                    newGraph.addEdge(newEdge);
+                    distMatrix[i][j] = newEdge.getDistance();
 
                     //Fusion de deux composantes connexes
                     for(int k = 0; k < n; k++) {
@@ -48,8 +57,6 @@ public class GraphGenerator {
         }
         int nb_comp = list_comp.size();
 
-        System.out.println("Nombre de composantes connexes avant connexification : " + nb_comp);
-
         //Connexification du graphe
         while(nb_comp > 1) {
             //Tirage de deux sommets au hasard
@@ -65,12 +72,10 @@ public class GraphGenerator {
 
             //On fusionne selon une probabilité p
             if(Math.random() <= p) {
-                //Ajout d'un arc
-                System.out.println("Ajout d'un arc !");
                 Vertex vi = newGraph.getVertex(randomV1);
                 Vertex vj = newGraph.getVertex(randomV2);
                 Edge newEdge = new Edge(vi, vj);
-                newGraph.addEdge(newEdge);
+                distMatrix[randomV1][randomV2] = newEdge.getDistance();
 
                 //Fusion de deux composantes connexes
                 for(int i = 0; i < n; i++) {
@@ -88,11 +93,38 @@ public class GraphGenerator {
             }
         }
 
-        System.out.println("Nombre de composantes connexes après connexification : " + nb_comp);
+        //Algorithme de Floyd-Warshall pour compléter le graph
+        for(int k = 0; k < n; k++) {
+            for(int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if(distMatrix[i][k] == Integer.MAX_VALUE || distMatrix[k][j] == Integer.MAX_VALUE) {
+                        continue;
+                    }
+                    if (distMatrix[i][j] > distMatrix[i][k] + distMatrix[k][j]) {
+                        distMatrix[i][j] = distMatrix[i][k] + distMatrix[k][j];
+                    }
+                }
+            }
+        }
 
-        //Affichage pour chaque noeud de l'ID et de sa composante connexe
+        //Symétrisation de la matrice (car le graphe est non-orienté)
         for(int i = 0; i < n; i++) {
-            System.out.println("Noeud " + i + " -> composante : " + vertexComp.get(i));
+            for(int j = 0; j < n; j++) {
+                if(distMatrix[i][j] == Integer.MAX_VALUE) {
+                    distMatrix[i][j] = distMatrix[j][i];
+                }
+            }
+        }
+
+        //Création des arcs à partir de la matrice des distances
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if(i != j) {
+                    Edge newEdge = new Edge(newGraph.getVertex(i), newGraph.getVertex(j));
+                    newEdge.setDistance(distMatrix[i][j]);
+                    newGraph.addEdge(newEdge);
+                }
+            }
         }
 
         return newGraph;
