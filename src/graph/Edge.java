@@ -33,6 +33,10 @@ public class Edge {
         computeDistance();
     }
 
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
     private void computeDistance() {
         this.distance = Math.sqrt(Math.pow((start.getX()-end.getX()),2) + Math.pow((start.getY()-end.getY()),2));
     }
