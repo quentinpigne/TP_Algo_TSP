@@ -27,7 +27,7 @@ public class Path {
         }
 
         //On ajoute l'arc uniquement si son sommet de départ est le dernier sommet du chemin
-        if(V.get(V.size()-1) == edge.getStart()) {
+        if(V.get(V.size()-1) == edge.getStart() || V.get(V.size()-1) == edge.getEnd()) {
             V.add(edge.getEnd());
             E.add(edge);
             length += edge.getDistance();
