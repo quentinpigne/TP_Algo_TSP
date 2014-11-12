@@ -54,7 +54,7 @@ public class Graph {
     public List<Edge> getVEdge(Vertex v) {
         List<Edge> edgeList = new ArrayList<Edge>();
         for(Edge edge : E) {
-            if(edge.getStart() == v) {
+            if(edge.getStart() == v || edge.getEnd() == v) {
                 edgeList.add(edge);
             }
         }

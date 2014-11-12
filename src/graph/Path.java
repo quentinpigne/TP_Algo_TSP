@@ -6,7 +6,7 @@ import java.util.List;
 public class Path {
     private List<Vertex> V = new ArrayList<Vertex>();
     private List<Edge> E = new ArrayList<Edge>();
-    private int length = 0;
+    private double length = 0;
 
     public List<Vertex> getV() {
         return V;
@@ -16,7 +16,7 @@ public class Path {
         return E;
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
     }
 
