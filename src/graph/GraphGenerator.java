@@ -93,6 +93,15 @@ public class GraphGenerator {
             }
         }
 
+        //Symétrisation de la matrice (car le graphe est non-orienté)
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(distMatrix[i][j] == Integer.MAX_VALUE) {
+                    distMatrix[i][j] = distMatrix[j][i];
+                }
+            }
+        }
+
         //Algorithme de Floyd-Warshall pour compléter le graph
         for(int k = 0; k < n; k++) {
             for(int i = 0; i < n; i++) {
@@ -103,15 +112,6 @@ public class GraphGenerator {
                     if (distMatrix[i][j] > distMatrix[i][k] + distMatrix[k][j]) {
                         distMatrix[i][j] = distMatrix[i][k] + distMatrix[k][j];
                     }
-                }
-            }
-        }
-
-        //Symétrisation de la matrice (car le graphe est non-orienté)
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                if(distMatrix[i][j] == Integer.MAX_VALUE) {
-                    distMatrix[i][j] = distMatrix[j][i];
                 }
             }
         }
