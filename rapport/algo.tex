@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[francais]{babel}
+\usepackage{fontspec}           % remplace \usepackage[utf8]{inputenc} et \usepackage[T1]{fontenc}      
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+% ------------Raccourcis-------------
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\pars}[1]{\left(#1\right)}
+\newcommand{\bigpars}[1]{\bigl(#1\bigr)}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+
+
+
+\title{ACVL}
+\title{Le problème du voyageur de commerce}
+\author{SALL Amadou \and PIGN\'E Quentin }
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\section{Structure de données}
+\section{Algorithmes}
+
+\subsection*{Floyd-Warshall}
+$d^{k+1}(i,j)$ est le plus court chemin de $i$ à $j$ n'utilisant que les sommets $\set{1,\cdots,k+1}$ comme sommet
+intermédiaires. Dès lors, il n'y a que deux cas possibles :
+\begin{description}
+    \item[on passe par le sommet $k+1$ :]  dans ce cas, il faut aller de $i$ à $k+1$ de façon optimale (coût
+  $d^{k}(i,k+1)$) puis quitter $k+1$ pour aller jusqu'à $j$ de façon optimale aussi (coût $d^{k}(k+1,j)$)
+\item[on ne passe pas par le sommet $k+1$ :] dans ce cas on a toujours un coût de $d^{k}(i,j)$
+\end{description}
+Ainsi on a la formule :
+\begin{displaymath}
+  d^{k+1}(i,j) = d^{k}(i,k+1) + d^{k}(k+1,j) 
+\end{displaymath}
+Nous fallant calculer la matrice des $d^{n}(i,j)$, le coeur de l'algorithme de Floyd-Warshall s'écrit :
+  \begin{algorithmic}[]
+   \For{$k \gets 1,n$}
+       \For{$i \gets 1,n$}
+           \For{$ \gets 1,n$}
+           \State $ d^{k+1}(i,j) = d^{k}(i,k+1) + d^{k}(k+1,j) $
+           \EndFor
+       \EndFor
+   \EndFor
+  \end{algorithmic}
+Ainsi l'algorithme de Floyd-Warshall a un coût de $O(n^3)$
+
+\subsection*{\'Enumération}
+
+\subsection*{Algorithme glouton}
+
+\subsection*{Algorithme de recherche locale}
+
+\subsection*{Sortir des minima locaux}
+
+\subsection*{Programmation dynamique}
+
+\subsection*{Branch and Bound}
+
+\subsection*{Algorithme d'approximation}
+
+\section{Comparaison des algorithmes}
+\section{Conclusion}
+
+\end{document}
