@@ -8,12 +8,32 @@ import graph.Vertex;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+Idée de l'algo :
+- Trouver les n combinaisons de n parmis n sommets
+- Créer une liste de n! chemins
+- Remplir les chemins avec les arcs -> calcul des longueurs
+- Trouver le chemin de longueur minimale
+ */
+
 public class Enumeration {
     public static Path enumeration(Graph g) {
-        //Création de la liste des chemins
+        //Création d'une liste de liste de sommets
+        List<List<Vertex>> vertexLists = new ArrayList<List<Vertex>>();
+        for (int i = 0; i < factorielle(g.getV().size()); i++) {
+            vertexLists.add(new ArrayList<Vertex>());
+        }
+
+        //Recherche des n combinaisons de n parmis n sommets
+
+
+        //Création de la liste de n! chemins
         List<Path> listPath = new ArrayList<Path>();
-        List<Vertex> listVertex = new ArrayList<Vertex>();
-        findAllPaths(listPath, listVertex, g);
+        for (int i = 0; i < factorielle(g.getV().size()); i++) {
+            listPath.add(new Path());
+        }
+
+        //Remplissage des chemins pour les n! listes de sommets
 
         //Recherche du plus court chemin parmis tous ceux calculés
         Path finalPath = listPath.get(0);
@@ -23,13 +43,11 @@ public class Enumeration {
         return finalPath;
     }
 
-    private static void findAllPaths(List<Path> listPath, List<Vertex> listVertex, Graph g) {
-        for(Vertex v : g.getV()) {
-            if(!listVertex.contains(v)) {
-                for(Edge edge : g.getVEdge(v)) {
-
-                }
-            }
-        }
+    private static int factorielle(int n)
+    {
+        if(n>1)
+            return n*factorielle(n - 1);
+        else
+            return 1;
     }
 }
