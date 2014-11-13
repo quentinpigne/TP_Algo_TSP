@@ -1,27 +1,16 @@
-\documentclass[11pt]{article}
-\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
-\usepackage[francais]{babel}
-\usepackage{fontspec}           % remplace \usepackage[utf8]{inputenc} et \usepackage[T1]{fontenc}      
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+\documentclass[11pt]{article} \usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage[francais]{babel} \usepackage{fontspec} % remplace \usepackage[utf8]{inputenc} et \usepackage[T1]{fontenc}
+\usepackage{amsmath} \usepackage{amsfonts} \usepackage{amssymb} \usepackage{algorithm} \usepackage{algpseudocode}
+\usepackage[babel=true]{csquotes} % csquotes va utiliser la langue définie dans babel
+
 % ------------Raccourcis-------------
-\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
-\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
-\newcommand{\pars}[1]{\left(#1\right)}
-\newcommand{\bigpars}[1]{\bigl(#1\bigr)}
-\newcommand{\set}[1]{\left\{#1\right\}}
-\newcommand{\floor}[1]{\lfloor #1 \rfloor}
-\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert} \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\pars}[1]{\left(#1\right)} \newcommand{\bigpars}[1]{\bigl(#1\bigr)} \newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor} \newcommand{\ceil}[1]{\lceil #1 \rceil}
 
 
 
-\title{ACVL}
-\title{Le problème du voyageur de commerce}
-\author{SALL Amadou \and PIGN\'E Quentin }
-\date{\today}
+\title{ACVL} \title{Le problème du voyageur de commerce} \author{SALL Amadou \and PIGN\'E Quentin } \date{\today}
 \begin{document}
 
 \maketitle
@@ -54,20 +43,43 @@ Nous fallant calculer la matrice des $d^{n}(i,j)$, le coeur de l'algorithme de F
 Ainsi l'algorithme de Floyd-Warshall a un coût de $O(n^3)$
 
 \subsection*{\'Enumération}
-
+Cette algorithme a un coût en $O(n!)$. En effet lors à l'étape $k$ on a $k-1$ choix. Pour faire donc les $n$ étapes, on
+a un coût de $(n-1)!$. On  a aussi $n$ possibilités pour le choix d'un noeud de départ.
 \subsection*{Algorithme glouton}
+Il y a $n$ possibilités pour le choix du sommets de départ. Une fois le sommet de départ choisi (nommons le $i$) on choisit le sommet qui
+minimise la distance. A l'étape $k$ on doit choisir entre $k-1$ sommets restants donc $k-1$ valeurs possibles, ce qui fait un coût de $k-1$. Au
+total on a $O(\sum_{k=1}^{n-1} k)$ opérations. 
 
+Ainsi l'algorithme glouton a un coût en $O(n^2)$
 \subsection*{Algorithme de recherche locale}
-
+Pour un arc donné, disons $(u,v)$, le nombre d'arcs à tester est $n-4$. On a $n-1$ possibilités pour le choix de
+$(u,v)$. Le coût de la recherche locale est donc $O(n^2)$
 \subsection*{Sortir des minima locaux}
 
 \subsection*{Programmation dynamique}
+Dans le chemin correspondant à $C(S,j)$ le prédécesseur $i_0$ de $j$ est l'un des $|S|-1$ éléments de
+$\set{S} \backslash \set{j}$. Il faut arriver jusqu'à $i_0$ en passant par le plus court chemin utilisant une et une
+seule fois les sommets de $\set{S} \backslash \set{j}$. Ainsi le coût est 
+$C(\set{S} \backslash \set{j},i_0) + l_{(i_0,j)}$. Le $i_0$ correspondant est celui qui minimise la précédente somme car
+sinon on serait passé par autre \enquote{prédécesseur potentiel} de $j$. Ainsi on a :
+\begin{displaymath}
+  C(S,j) = min_{i \in S , i \neq j}C(\set{S} \backslash \set{j},i)) + l_{(i,j)}
+\end{displaymath}
+La solution au problème est $C(E,n)$.
+ Le nombre de sous-ensembles de $\set{1,\cdots,n}$ est $2^n$. Chacun de ces sous-ensembles contient $O(n)$ sommets. Pour
+ un sommet $j$ de $S$, le calcul de $C(S,j)$ nécessite $O(n)$ opérations. 
+
+Ainsi la programmation dynamique a un coût en $O(n^22^n)$
 
 \subsection*{Branch and Bound}
 
 \subsection*{Algorithme d'approximation}
 
 \section{Comparaison des algorithmes}
+\begin{description}
+    \item[Avantage de la programmation dynamique sur l'énumération :] les sous-chemins du circuit minimal sous aussi
+  minimaux, on ne teste donc pas tous les circuits possibles. La complexité passe de $O(n!)$ à $O(n^22^n)$
+\end{description}
 \section{Conclusion}
 
 \end{document}
