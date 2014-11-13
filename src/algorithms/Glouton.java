@@ -8,11 +8,10 @@ import java.util.Stack;
  * Created by amadou on 12/11/14.
  */
 public class Glouton {
-
+    // pour stocker les sommets parcourus
+    private Stack <Integer> stack;
     private int numberOfVertex;
     private double[][] distanceMatrix;
-
-    // pour stocker les sommets parcourus
 
     public Stack<Integer> getStack() {
         return stack;
@@ -26,17 +25,13 @@ public class Glouton {
         return distanceMatrix;
     }
 
-    private Stack <Integer> stack;
-
     public Glouton(Graph graph){
         stack = new Stack<Integer>();
         numberOfVertex = graph.getV().size();
-        distanceMatrix = new double[Stack <Integer> stack;][numberOfVertex];
         distanceMatrix = graph.getDistanceMatrix();
     }
 
     public Stack<Integer> solution(int first){
-
         int[] visited = new int[numberOfVertex + 1];
         // On place le premier sommet dans notre pile
         visited[first] = 1;
@@ -61,14 +56,12 @@ public class Glouton {
         }
         return stack;
     }
+
     public double cost(){
         double d = 0.0;
         for (int i = 0; i < stack.size()  ; i++) {
-            System.out.println(i % (numberOfVertex) + "->" + ((i + 1) % (numberOfVertex)));
             d += distanceMatrix[stack.elementAt(i % (numberOfVertex) )][stack.elementAt((i+1) % numberOfVertex )];
         }
         return d;
-        stack.
     }
-
 }
