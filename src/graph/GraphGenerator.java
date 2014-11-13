@@ -126,7 +126,7 @@ public class GraphGenerator {
                 }
             }
         }
-
+        newGraph.setDistanceMatrix(distMatrix);
         return newGraph;
     }
 }
