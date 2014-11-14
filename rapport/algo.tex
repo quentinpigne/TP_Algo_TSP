@@ -15,25 +15,21 @@
 
 \maketitle
 \section{Structure de données}
-Nous avons une structure de données modélisant les graphes. Cette structure utilise une liste de sommets, une liste
-d'arcs et la fonction coût associé au graphe sous forme de matrice. Cette structure est nécessaire juste pour afficher
-les graphes et vérifier leur complétude. Tous les algorithmes que nous avons implémenté n'utilisent que la matrice de
-distance qui à elle seule définie le graphe.
+Nous avons dans un premier temps développé la structure de données servant à modéliser un graphe. Elle comporte une liste de sommets ainsi qu'une liste d'arcs, implémentées avec de simples \texttit{List} Java. Une telle structure est nécessaire pour afficher les graphes et vérifier leur complétude. Cependant afin de nous faciliter la tâche pour les algorithmes, nous avons décidé d'ajouter au graphe une matrice des distances entre sommets. La graphe étant complet et non orienté, la matrice est symétrique et chaque case représente un arc. Une telle structure nous permettra par exemple de facilement et rapidement récupérer toutes les distances des arcs partant d'un sommet. Ainsi, les algorithmes que nous avons implémenté n'utilisent que cette matrice des
+distances qui à elle seule définie le graphe.
 \section{Algorithmes}
-Pour chaque figure la courbe \textcolor{blue}{bleu} est la courbe obtenue avec nos valeurs expérimentales et la courbe \textcolor{red}{rouge} celle théorique.
+Pour chaque figure, la courbe \textcolor{blue}{bleu} est celle obtenue avec nos valeurs expérimentales alors que la \textcolor{red}{rouge} est la complexité théorique.
 \subsection*{Floyd-Warshall}
-$d^{k+1}(i,j)$ est le plus court chemin de $i$ à $j$ n'utilisant que les sommets $\set{1,\cdots,k+1}$ comme sommet
-intermédiaires. Dès lors, il n'y a que deux cas possibles :
+$d^{k+1}(i,j)$ est le plus court chemin de $i$ à $j$ n'utilisant que les sommets $\set{1,\cdots,k+1}$ comme sommet intermédiaires. Dès lors, il n'y a que deux cas possibles :
 \begin{description}
-    \item[on passe par le sommet $k+1$ :]  dans ce cas, il faut aller de $i$ à $k+1$ de façon optimale (coût
-  $d^{k}(i,k+1)$) puis quitter $k+1$ pour aller jusqu'à $j$ de façon optimale aussi (coût $d^{k}(k+1,j)$)
+    \item[on passe par le sommet $k+1$ :]  dans ce cas, il faut aller de $i$ à $k+1$ de façon optimale (coût $d^{k}(i,k+1)$) puis quitter $k+1$ pour aller jusqu'à $j$ de façon optimale aussi (coût $d^{k}(k+1,j)$)
 \item[on ne passe pas par le sommet $k+1$ :] dans ce cas on a toujours un coût de $d^{k}(i,j)$
 \end{description}
 Ainsi on a la formule :
 \begin{displaymath}
   d^{k+1}(i,j) = d^{k}(i,k+1) + d^{k}(k+1,j) 
 \end{displaymath}
-Nous fallant calculer la matrice des $d^{n}(i,j)$, le coeur de l'algorithme de Floyd-Warshall s'écrit :
+Le but étant calculer la matrice des $d^{n}(i,j)$, le coeur de l'algorithme de Floyd-Warshall s'écrit :
   \begin{algorithmic}[]
    \For{$k \gets 1,n$}
        \For{$i \gets 1,n$}
@@ -43,11 +39,10 @@ Nous fallant calculer la matrice des $d^{n}(i,j)$, le coeur de l'algorithme de F
        \EndFor
    \EndFor
   \end{algorithmic}
-Ainsi l'algorithme de Floyd-Warshall a un coût de $O(n^3)$
+Ainsi, l'algorithme de Floyd-Warshall a un coût de $O(n^3)$.
 
 \subsection*{\'Enumération}
-Cette algorithme a un coût en $O(n!)$. En effet lors à l'étape $k$ on a $k-1$ choix. Pour faire donc les $n$ étapes, on
-a un coût de $(n-1)!$. On  a aussi $n$ possibilités pour le choix d'un noeud de départ.
+Cet algorithme a un coût en $O(n!)$. En effet lors à l'étape $k$ on a $k-1$ choix. Pour faire donc les $n$ étapes, on a un coût de $(n-1)!$. On a aussi $n$ possibilités pour le choix d'un noeud de départ.
   \begin{figure}[ht]
 \begin{center}
   
@@ -56,13 +51,12 @@ a un coût de $(n-1)!$. On  a aussi $n$ possibilités pour le choix d'un noeud d
   \label{fig:enum}
 \end{center}
 \end{figure}
-La figure \ref{fig:enum} montre que le temps d'execution de L'algorithme d'énumération est $O(n!)$
-Le taille maximale qu'on a pu résoudre est $n=10$
+Après avoir tester l'algorithme sur des graphes de différentes taille, nous avons pu voir que la taille maximale est $n=10$. Ensuite, afin de tester le coût de l'algorithme en pratique, nous avons générer 10 graphes différents de tailles 1 à 10, puis nous avons mesurer le temps de calcul pour chaque graphe avant d'en tracer l'évolution. Ainsi, la figure \ref{fig:enum} montre que le temps d'exécution de l'algorithme d'énumération est bien en $O(n!)$.
+
 \subsection*{Algorithme glouton}
-Il y a $n$ possibilités pour le choix du sommets de départ. Une fois le sommet de départ choisi (nommons le $i$) on choisit le sommet qui
-minimise la distance. A l'étape $k$ on doit choisir entre $k-1$ sommets restants donc $k-1$ valeurs possibles, ce qui fait un coût de $k-1$. Au
-total on a $O(\sum_{k=1}^{n-1} k)$ opérations. 
-Ainsi l'algorithme glouton a un coût en $O(n^2)$
+Il y a $n$ possibilités pour le choix du sommets de départ. Une fois celui-ci choisi (que nous appellerons $i$), on choisit le sommet qui minimise la distance. À l'étape $k$, on doit choisir entre les $k-1$ sommets restants, soit $k-1$ valeurs possibles. Ce qui donne au final un coût de l'algorithme en $k-1$. Au total, on a $O(\sum_{k=1}^{n-1} k)$ opérations. 
+Ainsi l'algorithme glouton a un coût en $O(n^2)$.
+Le graphe ci-après présente l'étude numérique de la complexité de l'algorithme glouton, mesuré selon le même protocole expérimental que précédemment.
   \begin{figure}[ht]
 \begin{center}
   
@@ -71,11 +65,9 @@ Ainsi l'algorithme glouton a un coût en $O(n^2)$
   \label{fig:glouton}
 \end{center}
 \end{figure}
+On retrouve donc ainsi une complexité en $O(n^2)$.
 \subsection*{Algorithme de recherche locale}
-Pour un arc donné, disons $(u,v)$, le nombre d'arcs à tester est $n-4$. On a $n-1$ possibilités pour le choix de
-$(u,v)$. Le coût de la recherche locale est donc $O(n^2)$. L'amélioration apportée par le recherche locale peut
-atteindre plus de 50\%. Cependant on itère la recherche locale tant que c'est possible et rien ne ne garantit que, dans
-le pire cas, on a pas un coût exponentiel. 
+Pour un arc donné, disons $(u,v)$, le nombre d'arcs à tester est $n-4$. Et on a $n-1$ possibilités pour le choix de $(u,v)$. Le coût de la recherche locale est donc en $O(n^2)$. Bien que de même complexité que l'algorithme glouton, on peut se rendre compte en pratique que l'amélioration apportée par le recherche locale peut atteindre plus de 50\%. Cependant $O(n^2)$ est dans cette situation un coût moyen et la complexité au pire cas est exponentielle.
   \begin{figure}[ht]
 \begin{center}
   \includegraphics[scale=0.8]{images/exec_opt2.png}
@@ -83,8 +75,7 @@ le pire cas, on a pas un coût exponentiel.
   \label{fig:opt2}
 \end{center}
 \end{figure}
-En tout cas, lorsque nous avons fait tourné l'algorithme, nous avons eu un
-coût exponentiel (voir figure \ref{fig:opt2}). Sans doute sommes-nous tombés dans le pire cas.
+Lors de la mesure expérimentale de la complexité de l'algorithme, les résultats obtenus on mis en évidence un coût exponentiel (voir figure \ref{fig:opt2}). Cela est probablement dû au fait que nous testions l'algorithme sur une seule et même réalisation de l'algorithme glouton.
 \subsection*{Programmation dynamique}
 Dans le chemin correspondant à $C(S,j)$ le prédécesseur $i_0$ de $j$ est l'un des $|S|-1$ éléments de
 $\set{S} \backslash \set{j}$. Il faut arriver jusqu'à $i_0$ en passant par le plus court chemin utilisant une et une
@@ -122,7 +113,7 @@ l'algorithme de programmation dynamique peut s'écrire :
 (nombre de sommets - 1)
 \end{algorithmic}
 % \end{algorithm}
-
+Faute de temps, nous n'avons malheureusement pas pu implémenter cet algorithme afin de pouvoir en tester la complexité.
 \section{Comparaison des algorithmes}
 \begin{description}
     \item[Avantage de la programmation dynamique sur l'énumération :] les sous-chemins du circuit minimal sous aussi
