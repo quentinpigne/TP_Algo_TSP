@@ -14,15 +14,13 @@
 \begin{document}
 
 \maketitle
-\section{Convention}
-Pour chaque figure la courbe \textcolor{blue}{bleu} est la courbe obtenue avec nos valeurs expérimentales et la courbe \textcolor{red}{rouge} celle théorique.
 \section{Structure de données}
 Nous avons une structure de données modélisant les graphes. Cette structure utilise une liste de sommets, une liste
 d'arcs et la fonction coût associé au graphe sous forme de matrice. Cette structure est nécessaire juste pour afficher
 les graphes et vérifier leur complétude. Tous les algorithmes que nous avons implémenté n'utilisent que la matrice de
 distance qui à elle seule définie le graphe.
 \section{Algorithmes}
-
+Pour chaque figure la courbe \textcolor{blue}{bleu} est la courbe obtenue avec nos valeurs expérimentales et la courbe \textcolor{red}{rouge} celle théorique.
 \subsection*{Floyd-Warshall}
 $d^{k+1}(i,j)$ est le plus court chemin de $i$ à $j$ n'utilisant que les sommets $\set{1,\cdots,k+1}$ comme sommet
 intermédiaires. Dès lors, il n'y a que deux cas possibles :
