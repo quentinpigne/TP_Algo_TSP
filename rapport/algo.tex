@@ -45,16 +45,39 @@ Ainsi l'algorithme de Floyd-Warshall a un coût de $O(n^3)$
 \subsection*{\'Enumération}
 Cette algorithme a un coût en $O(n!)$. En effet lors à l'étape $k$ on a $k-1$ choix. Pour faire donc les $n$ étapes, on
 a un coût de $(n-1)!$. On  a aussi $n$ possibilités pour le choix d'un noeud de départ.
+  \begin{figure}[ht]
+\begin{center}
+  
+  \includegraphics[scale=0.8]{images/exec_enum.png}
+  \caption{Analyse de perfomances pour \'Enumération}
+  \label{enum}
+\end{center}
+\end{figure}
+La figure \ref{enum} montre que le temps d'execution de L'algorithme d'énumération est $O(n!)$
 \subsection*{Algorithme glouton}
 Il y a $n$ possibilités pour le choix du sommets de départ. Une fois le sommet de départ choisi (nommons le $i$) on choisit le sommet qui
 minimise la distance. A l'étape $k$ on doit choisir entre $k-1$ sommets restants donc $k-1$ valeurs possibles, ce qui fait un coût de $k-1$. Au
 total on a $O(\sum_{k=1}^{n-1} k)$ opérations. 
-
 Ainsi l'algorithme glouton a un coût en $O(n^2)$
+  \begin{figure}[ht]
+\begin{center}
+  
+  \includegraphics[scale=0.8]{images/exec_glouton.png}
+  \caption{Analyse de perfomances pour \'Enumération}
+  \ref{enum}
+\end{center}
+\end{figure}
 \subsection*{Algorithme de recherche locale}
 Pour un arc donné, disons $(u,v)$, le nombre d'arcs à tester est $n-4$. On a $n-1$ possibilités pour le choix de
 $(u,v)$. Le coût de la recherche locale est donc $O(n^2)$
-\subsection*{Sortir des minima locaux}
+  \begin{figure}[ht]
+\begin{center}
+  
+  \includegraphics[scale=0.8]{images/exec_opt2.png}
+  \caption{Analyse de perfomances pour \'Enumération}
+  \ref{enum}
+\end{center}
+\end{figure}
 
 \subsection*{Programmation dynamique}
 Dans le chemin correspondant à $C(S,j)$ le prédécesseur $i_0$ de $j$ est l'un des $|S|-1$ éléments de
@@ -71,14 +94,39 @@ La solution au problème est $C(E,n)$.
 
 Ainsi la programmation dynamique a un coût en $O(n^22^n)$
 
-\subsection*{Branch and Bound}
-
-\subsection*{Algorithme d'approximation}
+l'algorithme de programmation dynamique peut s'écrire :
+%\begin{algorithm}[!ht]
+%\caption{Programmation dynamique pour le TSP}
+\begin{algorithmic}[]
+%\Require une matrice de poids, un ensemble de $n$ sommets
+\For{chaque sous-ensemble $S$ commençant par $1$}
+\If{$|S| = 2$}
+\For{$i$ de $1$ à $n$}
+\State $C(S,i) \gets l_{(1,i)}$
+\EndFor
+\Else
+\For{$i$ de $1$ à $n$}
+\For{tous les $k$ $\notin$ $S - \{ 1 \}$}
+\State $C(S,i) \gets \min$ $\{$ $C(S - \{ k \} ,k)$ + $l_{(k,i)}$ $\}$
+\EndFor
+\EndFor
+\EndIf
+\EndFor
+\State retourner $\min$ $\{$ C(S,i) + $l_{(1,i)}$ $\}$ avec $|S| = $
+(nombre de sommets - 1)
+\end{algorithmic}
+% \end{algorithm}
 
 \section{Comparaison des algorithmes}
 \begin{description}
     \item[Avantage de la programmation dynamique sur l'énumération :] les sous-chemins du circuit minimal sous aussi
   minimaux, on ne teste donc pas tous les circuits possibles. La complexité passe de $O(n!)$ à $O(n^22^n)$
+  \item[Avantage de la combinaison glouton + recherche locale :] L'algorithme glouton permet de trouver des solutions en
+des temps raisonnables. Cependant la valeur trouvée n'est pas forcément l'optimum. Appliquer L'algorithme de recherche
+locale permet de gagner très nettement en précision (50\%)
+\item[Glouton + recherche locale vs programmation dynamique :] La programmation dynamique est beaucoup plus précise mais
+le coût en patît forcément. Juste le stockage de la matrice des stockage coute $O(n2^n)$
+
 \end{description}
 \section{Conclusion}
 

@@ -18,6 +18,13 @@ public class Opt2 {
         distanceMatrix = glouton.getDistanceMatrix();
         int first = 0;
         stack = glouton.solution(first);
+        Stack<Integer> newStack = new Stack<Integer>();
+        for (int i = 0; i < numberOfVertex; i++) {
+           newStack = glouton.solution(i);
+            if(cost(newStack) < cost(stack)){
+                stack = newStack;
+            }
+        }
     }
     public void solution(){
 
