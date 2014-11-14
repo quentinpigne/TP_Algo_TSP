@@ -2,7 +2,7 @@
 \usepackage[francais]{babel} \usepackage{fontspec} % remplace \usepackage[utf8]{inputenc} et \usepackage[T1]{fontenc}
 \usepackage{amsmath} \usepackage{amsfonts} \usepackage{amssymb} \usepackage{algorithm} \usepackage{algpseudocode}
 \usepackage[babel=true]{csquotes} % csquotes va utiliser la langue définie dans babel
-
+\usepackage{xcolor}
 % ------------Raccourcis-------------
 \newcommand{\abs}[1]{\left\lvert#1\right\rvert} \newcommand{\norm}[1]{\left\lVert#1\right\rVert}
 \newcommand{\pars}[1]{\left(#1\right)} \newcommand{\bigpars}[1]{\bigl(#1\bigr)} \newcommand{\set}[1]{\left\{#1\right\}}
@@ -14,7 +14,8 @@
 \begin{document}
 
 \maketitle
-
+\section{Convention}
+Pour chaque figure la courbe \textcolor{blue}{bleu} est la courbe obtenue avec nos valeurs expérimentales et la courbe \textcolor{red}{rouge} celle théorique.
 \section{Structure de données}
 Nous avons une structure de données modélisant les graphes. Cette structure utilise une liste de sommets, une liste
 d'arcs et la fonction coût associé au graphe sous forme de matrice. Cette structure est nécessaire juste pour afficher
