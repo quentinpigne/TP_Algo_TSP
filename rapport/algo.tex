@@ -68,23 +68,23 @@ Ainsi l'algorithme glouton a un coût en $O(n^2)$
   
   \includegraphics[scale=0.8]{images/exec_glouton.png}
   \caption{Analyse de perfomances pour L'algorithme glouton}
-  \ref{fig:glouton}
+  \label{fig:glouton}
 \end{center}
 \end{figure}
 \subsection*{Algorithme de recherche locale}
 Pour un arc donné, disons $(u,v)$, le nombre d'arcs à tester est $n-4$. On a $n-1$ possibilités pour le choix de
 $(u,v)$. Le coût de la recherche locale est donc $O(n^2)$. L'amélioration apportée par le recherche locale peut
 atteindre plus de 50\%. Cependant on itère la recherche locale tant que c'est possible et rien ne ne garantit que, dans
-le pire cas, on a pas un coût exponentiel. En tout cas, lorsque nous avons fait tourné L'algorithme, nous avons eu un
-coût exponentiel (voir figure \label{fig:opt}). Sans doute sommes-nous tombés dans le pire cas.
+le pire cas, on a pas un coût exponentiel. 
   \begin{figure}[ht]
 \begin{center}
   \includegraphics[scale=0.8]{images/exec_opt2.png}
   \caption{Analyse de perfomances pour 2-OPT}
-  \ref{fig:opt2}
+  \label{fig:opt2}
 \end{center}
 \end{figure}
-
+En tout cas, lorsque nous avons fait tourné l'algorithme, nous avons eu un
+coût exponentiel (voir figure \ref{fig:opt2}). Sans doute sommes-nous tombés dans le pire cas.
 \subsection*{Programmation dynamique}
 Dans le chemin correspondant à $C(S,j)$ le prédécesseur $i_0$ de $j$ est l'un des $|S|-1$ éléments de
 $\set{S} \backslash \set{j}$. Il faut arriver jusqu'à $i_0$ en passant par le plus court chemin utilisant une et une
