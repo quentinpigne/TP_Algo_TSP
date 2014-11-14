@@ -16,6 +16,10 @@
 \maketitle
 
 \section{Structure de données}
+Nous avons une structure de données modélisant les graphes. Cette structure utilise une liste de sommets, une liste
+d'arcs et la fonction coût associé au graphe sous forme de matrice. Cette structure est nécessaire juste pour afficher
+les graphes et vérifier leur complétude. Tous les algorithmes que nous avons implémenté n'utilisent que la matrice de
+distance et font totalement abstraction du graphe.
 \section{Algorithmes}
 
 \subsection*{Floyd-Warshall}
@@ -50,10 +54,10 @@ a un coût de $(n-1)!$. On  a aussi $n$ possibilités pour le choix d'un noeud d
   
   \includegraphics[scale=0.8]{images/exec_enum.png}
   \caption{Analyse de perfomances pour \'Enumération}
-  \label{enum}
+  \label{fig:enum}
 \end{center}
 \end{figure}
-La figure \ref{enum} montre que le temps d'execution de L'algorithme d'énumération est $O(n!)$
+La figure \ref{fig:enum} montre que le temps d'execution de L'algorithme d'énumération est $O(n!)$
 \subsection*{Algorithme glouton}
 Il y a $n$ possibilités pour le choix du sommets de départ. Une fois le sommet de départ choisi (nommons le $i$) on choisit le sommet qui
 minimise la distance. A l'étape $k$ on doit choisir entre $k-1$ sommets restants donc $k-1$ valeurs possibles, ce qui fait un coût de $k-1$. Au
@@ -63,19 +67,21 @@ Ainsi l'algorithme glouton a un coût en $O(n^2)$
 \begin{center}
   
   \includegraphics[scale=0.8]{images/exec_glouton.png}
-  \caption{Analyse de perfomances pour \'Enumération}
-  \ref{enum}
+  \caption{Analyse de perfomances pour L'algorithme glouton}
+  \ref{fig:glouton}
 \end{center}
 \end{figure}
 \subsection*{Algorithme de recherche locale}
 Pour un arc donné, disons $(u,v)$, le nombre d'arcs à tester est $n-4$. On a $n-1$ possibilités pour le choix de
-$(u,v)$. Le coût de la recherche locale est donc $O(n^2)$
+$(u,v)$. Le coût de la recherche locale est donc $O(n^2)$. L'amélioration apportée par le recherche locale peut
+atteindre plus de 50\%. Cependant on itère la recherche locale tant que c'est possible et rien ne ne garantit que, dans
+le pire cas, on a pas un coût exponentiel. En tout cas, lorsque nous avons fait tourné L'algorithme, nous avons eu un
+coût exponentiel (voir figure \label{fig:opt}). Sans doute sommes-nous tombés dans le pire cas.
   \begin{figure}[ht]
 \begin{center}
-  
   \includegraphics[scale=0.8]{images/exec_opt2.png}
-  \caption{Analyse de perfomances pour \'Enumération}
-  \ref{enum}
+  \caption{Analyse de perfomances pour 2-OPT}
+  \ref{fig:opt2}
 \end{center}
 \end{figure}
 
@@ -128,6 +134,5 @@ locale permet de gagner très nettement en précision (50\%)
 le coût en patît forcément. Juste le stockage de la matrice des stockage coute $O(n2^n)$
 
 \end{description}
-\section{Conclusion}
 
 \end{document}
